@@ -6,6 +6,6 @@ namespace RelationshipTask.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<Students> MyProperty { get; set; }
+        public List<Students> Students { get; set; }
     }
 }
