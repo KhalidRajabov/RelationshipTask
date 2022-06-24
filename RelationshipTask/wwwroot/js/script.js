@@ -102,6 +102,24 @@ $(document).ready(function () {
         }
     })
 
+    $(document).on('click', '.category2 li a', function (e) {
+        e.preventDefault();
+        let category = $(this).attr('data-id');
+        let products = $('.product-item2');
+
+        products.each(function () {
+            if (category == $(this).attr('data-id')) {
+                $(this).parent().fadeIn();
+            }
+            else {
+                $(this).parent().hide();
+            }
+        })
+        if (category == 'all') {
+            products.parent().fadeIn();
+        }
+    })
+
     // ACCORDION 
 
     $(document).on('click', '.question', function()

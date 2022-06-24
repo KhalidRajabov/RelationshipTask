@@ -13,5 +13,9 @@ namespace RelationshipTask.DAL
         public DbSet<Students> Students { get; set; }
         public DbSet<Users> Users { get; set; }
         public DbSet<Socials> Socials { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<Genre> Genre { get; set; }
+        public DbSet<BookGenre> BookGenres { get; set; }
+
     }
 }

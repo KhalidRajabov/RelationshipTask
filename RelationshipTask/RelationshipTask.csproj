@@ -13,6 +13,8 @@
     <Compile Remove="Migrations\20220624111707_grouptable.Designer.cs" />
     <Compile Remove="Migrations\20220624121515_socials_user.cs" />
     <Compile Remove="Migrations\20220624121515_socials_user.Designer.cs" />
+    <Compile Remove="Migrations\20220624220433_AddBookGenreTable.cs" />
+    <Compile Remove="Migrations\20220624220433_AddBookGenreTable.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
