@@ -2,7 +2,7 @@
 
 namespace RelationshipTask.Migrations
 {
-    public partial class initalProject : Migration
+    public partial class fckntable : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -26,24 +26,23 @@ namespace RelationshipTask.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FullName = table.Column<string>(nullable: true),
-                    GroupId = table.Column<int>(nullable: false),
-                    GroupsId = table.Column<int>(nullable: true)
+                    GroupId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Students", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Students_Groups_GroupsId",
-                        column: x => x.GroupsId,
+                        name: "FK_Students_Groups_GroupId",
+                        column: x => x.GroupId,
                         principalTable: "Groups",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Students_GroupsId",
+                name: "IX_Students_GroupId",
                 table: "Students",
-                column: "GroupsId");
+                column: "GroupId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

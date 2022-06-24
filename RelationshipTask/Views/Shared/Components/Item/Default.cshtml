@@ -1,0 +1,13 @@
+﻿@model List<Students>
+
+     @foreach (var item in Model)
+                  {
+                       <div class="col-sm-6 col-md-4 col-lg-3 mt-3">
+                        <div class="product-item text-center" data-id="@item.Group.Name.ToLower()">
+                            <div class="title mt-3">
+                                <h6>@item.FullName</h6>
+                            </div>
+                            
+                        </div>
+                    </div>
+                  }

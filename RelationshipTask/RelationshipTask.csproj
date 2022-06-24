@@ -5,6 +5,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20220623155651_GroupStudentTable.cs" />
+    <Compile Remove="Migrations\20220623155651_GroupStudentTable.Designer.cs" />
+    <Compile Remove="Migrations\20220624110832_newtable.cs" />
+    <Compile Remove="Migrations\20220624110832_newtable.Designer.cs" />
+    <Compile Remove="Migrations\20220624111707_grouptable.cs" />
+    <Compile Remove="Migrations\20220624111707_grouptable.Designer.cs" />
+    <Compile Remove="Migrations\20220624121515_socials_user.cs" />
+    <Compile Remove="Migrations\20220624121515_socials_user.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.0">
       <PrivateAssets>all</PrivateAssets>

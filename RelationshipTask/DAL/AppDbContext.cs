@@ -9,9 +9,9 @@ namespace RelationshipTask.DAL
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
-        public DbSet<Students> Students { get; set; }
         public DbSet<Groups> Groups { get; set; }
-
-
+        public DbSet<Students> Students { get; set; }
+        public DbSet<Users> Users { get; set; }
+        public DbSet<Socials> Socials { get; set; }
     }
 }

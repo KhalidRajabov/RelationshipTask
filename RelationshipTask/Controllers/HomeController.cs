@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using RelationshipTask.DAL;
 using RelationshipTask.Models;
+using RelationshipTask.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -21,7 +22,13 @@ namespace RelationshipTask.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            HomeVM homeVM = new HomeVM();
+
+            homeVM.Groups = _context.Groups.ToList();
+            homeVM.Students = _context.Students.ToList();
+            homeVM.Users= _context.Users.ToList();
+            homeVM.Socials= _context.Socials.ToList();
+            return View(homeVM);
         }
     }
 }

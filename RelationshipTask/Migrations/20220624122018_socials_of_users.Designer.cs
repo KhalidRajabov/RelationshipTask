@@ -10,8 +10,8 @@ using RelationshipTask.DAL;
 namespace RelationshipTask.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220623155452_initalProject")]
-    partial class initalProject
+    [Migration("20220624122018_socials_of_users")]
+    partial class socials_of_users
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,6 +36,29 @@ namespace RelationshipTask.Migrations
                     b.ToTable("Groups");
                 });
 
+            modelBuilder.Entity("RelationshipTask.Models.Socials", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Facebook")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Instagram")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UsersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("Socials");
+                });
+
             modelBuilder.Entity("RelationshipTask.Models.Students", b =>
                 {
                     b.Property<int>("Id")
@@ -49,21 +72,42 @@ namespace RelationshipTask.Migrations
                     b.Property<int>("GroupId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("GroupsId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("GroupsId");
+                    b.HasIndex("GroupId");
 
                     b.ToTable("Students");
                 });
 
+            modelBuilder.Entity("RelationshipTask.Models.Users", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("RelationshipTask.Models.Socials", b =>
+                {
+                    b.HasOne("RelationshipTask.Models.Users", "Users")
+                        .WithMany("Socials")
+                        .HasForeignKey("UsersId");
+                });
+
             modelBuilder.Entity("RelationshipTask.Models.Students", b =>
                 {
-                    b.HasOne("RelationshipTask.Models.Groups", "Groups")
+                    b.HasOne("RelationshipTask.Models.Groups", "Group")
                         .WithMany("Students")
-                        .HasForeignKey("GroupsId");
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
