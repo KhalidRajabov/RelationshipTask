@@ -39,12 +39,24 @@
                               </td>
                           <td>@item.Name</td>
                           <td> $@item.Price</td>
-                          <td> @item.GenreIds</td>
-                          <td> @item.AuthorIds</td>
+                          <td style="display:flex; flex-direction: column;">
+                          @foreach (var genre in item.BookGenres)
+                                    {
+                                         <span>@genre.Genres.Name</span>               
+                                    }
+                          </td>
+
+                          <td style="width: 100px">
+                          @foreach (var author in item.BookAuthors)
+                                    {
+                                        <span>@author.Authors.Name</span>
+                                                
+                                    }
+                          </td>
                           <td>
-                              <a class="btn btn-warning fs-5"  asp-action="update" asp-route-id="@item.Id"><i  class="mdi mdi-key-plus"></i></a>
-                              <a class="btn btn-success fs-5" asp-action="detail" asp-route-id="@item.Id"><i class="mdi mdi-information-outline"></i></a>
-                              <a class="btn btn-danger fs-5" asp-action="delete" asp-route-id="@item.Id"><i class="mdi mdi-delete-forever"></i></a>
+                              <a class="btn btn-warning fs-5"  asp-action="update" asp-route-id="@item.Id"><i style="color:white" class="fa-solid fa-pen-to-square"></i></a>
+                              <a class="btn btn-success fs-5" asp-action="detail" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i></a>
+                              <a class="btn btn-danger fs-5" asp-action="delete" asp-route-id="@item.Id"><i class="fa-solid fa-delete-left"></i></a>
 
                           </td>
                         </tr>

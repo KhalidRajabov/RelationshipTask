@@ -5,7 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using RelationshipTask.DAL;
 using RelationshipTask.Models;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace RelationshipTask.Controllers
 {
@@ -66,6 +68,25 @@ namespace RelationshipTask.Controllers
             newbook.BookGenres = bookGenres; ;
             _context.Add(newbook);
             _context.SaveChanges();
+            return RedirectToAction("index");
+        }
+        public async Task<IActionResult> Detail(int? id)
+        {
+            if(id== null) return NotFound();
+            Book book = await _context.Books.Include(a_i => a_i.BookAuthors).ThenInclude(a => a.Authors)
+                .Include(g_i => g_i.BookGenres).ThenInclude(g => g.Genres).FirstOrDefaultAsync(c => c.Id == id);
+            if (book== null) return NotFound();
+            return View(book);
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null) return NotFound();
+            Book book= await _context.Books.FindAsync(id);
+            if (book == null) return NotFound();
+            
+            _context.Books.Remove(book);
+            await _context.SaveChangesAsync();
             return RedirectToAction("index");
         }
 

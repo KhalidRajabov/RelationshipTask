@@ -1,0 +1,42 @@
+﻿@model Book
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+
+
+
+                <div class="card mb-3" style="max-width: 540px;">
+  <div style="padding: 15px" class="row g-0">
+    <div class="col-md-4">
+      <img src="~/img/" class="img-fluid rounded-start" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">@Model.Name</h5>
+        <p class="card-text">Price: $@Model.Price</p>
+        <ol >
+            <b>Authors: </b>
+            @foreach (var item in Model.BookAuthors)
+           {
+               <li>@item.Authors.Name</li>
+           }
+        </ol>
+
+        <ol >
+            <b>Genres:</b>
+            @foreach (var item in Model.BookGenres)
+           {
+               <li>@item.Genres.Name</li>
+           }
+        </ol>
+        
+      </div>
+    </div>
+    <a style="align-self:center; margin-bottom: 40px; margin-top: 40px;" asp-action="index" class="btn btn-info w-25">Go Back</a>
+  </div>
+</div>
+
+</div>

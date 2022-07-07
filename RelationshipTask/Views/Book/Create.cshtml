@@ -38,7 +38,11 @@
                         <option selected>Select Genres</option>
                     </select>
                     
-                    
+                    <div class="form-group">
+                      <label asp-for="Photo" ></label>
+                      <input asp-for="Photo" class="form-control" maxlength="1000"  placeholder="Price">
+                      <span style="color: red;" asp-validation-for="Photo"></span>
+                    </div>
                     
 
                     <button type="submit" class="btn btn-success me-2">Save</button>
