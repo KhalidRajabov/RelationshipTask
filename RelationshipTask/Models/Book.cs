@@ -10,7 +10,7 @@ namespace RelationshipTask.Models
         public string Name { get; set; }
         public double Price { get; set; }
         [NotMapped]
-        public IFormFile Photo { get; set; }
+        public List<IFormFile> Photos { get; set; }
         public List<Image> Images { get; set; }
         public List<BookGenre> BookGenres { get; set; }
         public List<BookAuthor> BookAuthors { get; set; }

@@ -6,9 +6,15 @@
 }
 
 
-<div class="row">
+<div style="margin: 20px auto;" class="row">
 
-      <div class="col-lg-12 grid-margin stretch-card">
+     @if (@Model.Count()<1)
+    {
+        <a asp-controller="home" asp-action="index">No Product, go home</a>
+    }
+    else
+    {
+         <div class="col-lg-12 grid-margin stretch-card">
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Hoverable Table</h4>
@@ -34,22 +40,41 @@
                             count++;
                            <tr>
                           <td>@count</td>
-                          <td> 
-                             <img style="border-radius:0; width:100px; height:100px" /> 
-                              </td>
-                          <td>@item.Name</td>
+                          <td > 
+
+                              <div style="display: flex; flex-direction:row; flex-wrap: wrap; max-width: 150px">
+
+
+                                @if (item.Images.Count()>1)
+                                {
+                                   @foreach (var images in item.Images)
+                                       {
+                                           <img style="border-radius:0; padding:5px; width:50px; height:50px" src="~/img/@images.ImageUrl"/> 
+                                                }
+
+                                }
+                                else
+                                {
+                                   @foreach (var images in item.Images)
+                                       {
+                                           <img style="border-radius:0; width:100px; height:100px" src="~/img/@images.ImageUrl"/> 
+                                                } 
+                                }
+                              </div>
+                          </td>
+                          <td>@item.Name.ToUpper()</td>
                           <td> $@item.Price</td>
                           <td style="display:flex; flex-direction: column;">
                           @foreach (var genre in item.BookGenres)
                                     {
-                                         <span>@genre.Genres.Name</span>               
+                                         <span>@genre.Genres.Name.ToUpper()</span>               
                                     }
                           </td>
 
                           <td style="width: 100px">
                           @foreach (var author in item.BookAuthors)
                                     {
-                                        <span>@author.Authors.Name</span>
+                                        <span>@author.Authors.Name.ToUpper()</span>
                                                 
                                     }
                           </td>
@@ -67,6 +92,7 @@
                 </div>
               </div>
             </div>
+    }
 
 </div>
 

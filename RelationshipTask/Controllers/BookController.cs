@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RelationshipTask.DAL;
+using RelationshipTask.Extensions;
 using RelationshipTask.Models;
 using System.Collections.Generic;
 using System.IO;
@@ -26,7 +27,7 @@ namespace RelationshipTask.Controllers
         {
             List<Book> book = new List<Book>();
             book = _context.Books.Include(a_i=>a_i.BookAuthors).ThenInclude(a=>a.Authors)
-                .Include(g_i=>g_i.BookGenres).ThenInclude(g=>g.Genres).ToList();
+                .Include(g_i=>g_i.BookGenres).ThenInclude(g=>g.Genres).Include(i=>i.Images).ToList();
             return View(book);
         }
         public IActionResult Create()
@@ -40,12 +41,55 @@ namespace RelationshipTask.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Book book)
         {
+            ViewBag.Authors = new SelectList(_context.Authors.ToList(), "Id", "Name");
+            ViewBag.Genres = new SelectList(_context.Genre.ToList(), "Id", "Name");
+             
+            List<Image> Images = new List<Image>();
+
+            foreach (var item in book.Photos)
+            {
+                if (item == null)
+                {
+                    ModelState.AddModelError("Photo", "Do not leave it empty");
+                    return View();
+                }
+
+                if (!item.IsImage())
+                {
+                    ModelState.AddModelError("Photo", "Do not leave it empty");
+                    return View();
+                }
+                if (item.ValidSize(10000))
+                {
+                    ModelState.AddModelError("Photo", "Image size can not be large");
+                    return View();
+                }
+                Image image = new Image();
+                image.ImageUrl = item.SaveImage(_env, "img");
+                Images.Add(image);
+            }
+            if (book.GenreIds==null)
+            {
+                ModelState.AddModelError("GenreIds", "Choose a genre");
+                return View();
+            }
+            if (book.AuthorIds== null)
+            {
+                ModelState.AddModelError("Author", "Choose an author");
+                return View();
+            }
+
+
             if (!ModelState.IsValid) return View();
             Book newbook = new Book
             {
-                Name = book.Name,
-                Price = book.Price
+                Name = book.Name.ToUpper(),
+                Price = book.Price,
+                Images = Images
+                
             };
+
+
             List<BookAuthor> bookAuthors = new List<BookAuthor>();
 
             foreach (int item in book.AuthorIds)
@@ -74,9 +118,40 @@ namespace RelationshipTask.Controllers
         {
             if(id== null) return NotFound();
             Book book = await _context.Books.Include(a_i => a_i.BookAuthors).ThenInclude(a => a.Authors)
-                .Include(g_i => g_i.BookGenres).ThenInclude(g => g.Genres).FirstOrDefaultAsync(c => c.Id == id);
+                .Include(g_i => g_i.BookGenres).ThenInclude(g => g.Genres).Include(i=>i.Images).FirstOrDefaultAsync(c => c.Id == id);
             if (book== null) return NotFound();
             return View(book);
+        }
+
+
+
+        public async Task<IActionResult> Update(int? id)
+        {
+            ViewBag.Authors = new SelectList(_context.Authors.ToList(), "Id", "Name");
+            ViewBag.Genres = new SelectList(_context.Genre.ToList(), "Id", "Name");
+            if (id == null) return NotFound();
+            Book book = await _context.Books.Include(a_i => a_i.BookAuthors).ThenInclude(a => a.Authors)
+                .Include(g_i => g_i.BookGenres).ThenInclude(g => g.Genres).Include(i => i.Images).FirstOrDefaultAsync(c => c.Id == id);
+            if (book == null) return NotFound();
+            return View(book);
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Update(int? id, Book book)
+        {
+            ViewBag.Authors = new SelectList(_context.Authors.ToList(), "Id", "Name");
+            ViewBag.Genres = new SelectList(_context.Genre.ToList(), "Id", "Name");
+
+            if (!ModelState.IsValid) return View();
+            if (id == null) return NotFound();
+
+
+
+
+
+            return RedirectToAction("index");
         }
 
         public async Task<IActionResult> Delete(int? id)
@@ -89,6 +164,10 @@ namespace RelationshipTask.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("index");
         }
+
+
+
+        
 
     }
 }

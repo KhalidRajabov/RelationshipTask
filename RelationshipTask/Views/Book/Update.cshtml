@@ -1,0 +1,84 @@
+﻿@model Book
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+
+    <div class="container-fluid">
+
+        <div class="col-md-6 card-img-top" style="display: flex; flex-direction:row; flex-wrap: wrap;">
+
+
+                                @if (Model.Images.Count()>1)
+                                {
+                                   @foreach (var images in Model.Images)
+                                       {
+                                           <img style="border-radius:0; padding:5px; width: 120px; height:120px; margin: auto"   src="~/img/@images.ImageUrl"/> 
+                                                }
+
+                                }
+                                else
+                                {
+                                   @foreach (var images in Model.Images)
+                                       {
+                                           <img style="border-radius:0; width:100%; height:100%; margin: auto" src="~/img/@images.ImageUrl"/> 
+                                                } 
+                                }
+                              </div>
+
+    </div>
+
+     <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Create Table</h4>
+                  <form class="forms-sample" method="POST" enctype="multipart/form-data">
+
+                    <div class="form-group">
+                      <label asp-for="Name" ></label>
+                      <input asp-for="Name" class="form-control" maxlength="1000"  placeholder="Name">
+                      <span style="color: red;" asp-validation-for="Name"></span>
+                    </div>
+
+
+                    <div class="form-group">
+                      <label asp-for="Price" ></label>
+                      <input asp-for="Price" class="form-control" maxlength="1000"  placeholder="Price">
+                      <span style="color: red;" asp-validation-for="Price"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                    <label asp-for="AuthorIds"></label>
+                    <select asp-for="AuthorIds" class="form-select" asp-items="ViewBag.Authors" >
+                        <option selected>Select Authors</option>
+                    </select>
+                    <span style="color: red;" asp-validation-for="AuthorIds"></span>
+                    </div>
+
+                    <div class="form-group">
+                    <label asp-for="GenreIds"></label>
+                    <select asp-for="GenreIds" class="form-select" asp-items="ViewBag.Genres" >
+                        <option selected>Select Genres</option>
+                    </select>
+                    <span style="color: red;" asp-validation-for="GenreIds"></span>
+                    </div>
+                    <div class="form-group">
+                      <label asp-for="Photos" ></label>
+                      <input asp-for="Photos" class="form-control" maxlength="1000"  placeholder="Price">
+                      <span style="color: red;" asp-validation-for="Photos"></span>
+                    </div>
+                    
+
+                    <button type="submit" class="btn btn-success me-2">Save</button>
+                    <a asp-action="index" class="btn btn-primary"> Go Back</a>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+
+</div>
+
+

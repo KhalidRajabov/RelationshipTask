@@ -8,16 +8,32 @@
 
 
 
-                <div class="card mb-3" style="max-width: 540px;">
-  <div style="padding: 15px" class="row g-0">
-    <div class="col-md-4">
-      <img src="~/img/" class="img-fluid rounded-start" alt="...">
+
+    <div class="card" style="width: 18rem;">
+  <div class="card-img-top" style="display: flex; flex-direction:row; flex-wrap: wrap;width: 100%; height: 350px">
+
+
+                                @if (Model.Images.Count()>1)
+                                {
+                                   @foreach (var images in Model.Images)
+                                       {
+                                           <img style="border-radius:0; padding:5px; width: 120px; height:120px; margin: auto"   src="~/img/@images.ImageUrl"/> 
+                                                }
+
+                                }
+                                else
+                                {
+                                   @foreach (var images in Model.Images)
+                                       {
+                                           <img style="border-radius:0; width:100%; height:100%; margin: auto" src="~/img/@images.ImageUrl"/> 
+                                                } 
+                                }
+                              </div>
     </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title">@Model.Name</h5>
-        <p class="card-text">Price: $@Model.Price</p>
-        <ol >
+  <div class="card-body">
+    <h5 class="card-title">@Model.Name</h5>
+    <p class="card-text">Price: $@Model.Price</p>
+    <ol >
             <b>Authors: </b>
             @foreach (var item in Model.BookAuthors)
            {
@@ -32,11 +48,8 @@
                <li>@item.Genres.Name</li>
            }
         </ol>
-        
-      </div>
-    </div>
-    <a style="align-self:center; margin-bottom: 40px; margin-top: 40px;" asp-action="index" class="btn btn-info w-25">Go Back</a>
+  <a style="align-self:center; margin: 40px auto;" asp-action="index" class="btn btn-info ">Go Back</a>
   </div>
 </div>
 
-</div>
+

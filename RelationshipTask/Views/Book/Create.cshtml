@@ -1,8 +1,7 @@
 ﻿@model Book
 @{
     ViewData["Title"] = "Create";
-    Layout = null;
-    //"~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="row">
@@ -12,7 +11,7 @@
               <div class="card">
                 <div class="card-body">
                   <h4 class="card-title">Create Table</h4>
-                  <form class="forms-sample" method="POST">
+                  <form class="forms-sample" method="POST" enctype="multipart/form-data">
 
                     <div class="form-group">
                       <label asp-for="Name" ></label>
@@ -27,21 +26,25 @@
                       <span style="color: red;" asp-validation-for="Price"></span>
                     </div>
                     
-
+                    <div class="form-group">
                     <label asp-for="AuthorIds"></label>
                     <select asp-for="AuthorIds" class="form-select" asp-items="ViewBag.Authors" >
                         <option selected>Select Authors</option>
                     </select>
+                    <span style="color: red;" asp-validation-for="AuthorIds"></span>
+                    </div>
 
+                    <div class="form-group">
                     <label asp-for="GenreIds"></label>
                     <select asp-for="GenreIds" class="form-select" asp-items="ViewBag.Genres" >
                         <option selected>Select Genres</option>
                     </select>
-                    
+                    <span style="color: red;" asp-validation-for="GenreIds"></span>
+                    </div>
                     <div class="form-group">
-                      <label asp-for="Photo" ></label>
-                      <input asp-for="Photo" class="form-control" maxlength="1000"  placeholder="Price">
-                      <span style="color: red;" asp-validation-for="Photo"></span>
+                      <label asp-for="Photos" ></label>
+                      <input asp-for="Photos" class="form-control" maxlength="1000"  placeholder="Price">
+                      <span style="color: red;" asp-validation-for="Photos"></span>
                     </div>
                     
 
