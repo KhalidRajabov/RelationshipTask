@@ -148,9 +148,47 @@ namespace RelationshipTask.Controllers
             if (id == null) return NotFound();
 
 
+            Book dbbook= await _context.Books.FindAsync(id);
+            Image dbimage = new Image();
+            if (dbbook == null) return NotFound();
+            List<Image> images = new List<Image>();
+            foreach (var item in book.Photos)
+            {
+                if (item == null)
+                {
+                    dbimage.ImageUrl = dbimage.ImageUrl;
+                }
+                else
+                {
+
+                    if (!item.IsImage())
+                    {
+                        ModelState.AddModelError("Photo", "Choose images only");
+                        return View();
+                    }
+                    if (item.ValidSize(20000))
+                    {
+                        ModelState.AddModelError("Photo", "Image size can not be large");
+                        return View();
+                    }
+                    string oldImg = dbimage.ImageUrl;
+                    string path = Path.Combine(_env.WebRootPath, "img", oldImg);
+                    dbimage.ImageUrl = item.SaveImage(_env, "img");
+                    Helper.Helper.DeleteImage(path);
+
+                }
+            }
 
 
 
+
+            dbbook.Name = book.Name;
+            dbbook.Price = book.Price;
+            dbbook.GenreIds = book.GenreIds;
+            dbbook.AuthorIds = book.AuthorIds;
+
+            _context.Books.Add(dbbook);
+            await _context.SaveChangesAsync();
             return RedirectToAction("index");
         }
 
